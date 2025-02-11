@@ -16,5 +16,5 @@ sudo docker push monkeypatched.azurecr.io/llm/deepseek-r1:latest
 
 
 
-sudo az login
+az loginaz 
 sudo az acr login --name monkeypatched
