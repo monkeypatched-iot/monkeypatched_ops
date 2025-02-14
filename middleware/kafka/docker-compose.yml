@@ -1,14 +1,6 @@
 version: '3.8'
 
 services:
-  zookeeper:
-    image: confluentinc/cp-zookeeper:latest
-    container_name: zookeeper
-    restart: always
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-
   kafka:
     image: confluentinc/cp-kafka:latest
     container_name: kafka
@@ -16,10 +8,14 @@ services:
     ports:
       - "9092:9092"
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
+      KAFKA_KRAFT_MODE: "true"  # Enable KRaft mode
+      KAFKA_CFG_PROCESS_ROLES: "broker,controller"  # Roles for KRaft mode
+      KAFKA_CFG_NODE_ID: "1"  # Unique node ID for the Kafka broker
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL: "PLAINTEXT"  # No encryption
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka.westus2.azurecontainerapps.io:9092"  # Replace with your FQDN or IP
+      KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:9092"  # Listen on all interfaces
+      KAFKA_LISTENER_NAME_EXTERNAL: "EXTERNAL"  # External listener name
+      KAFKA_LISTENER_NAME_INTERNAL: "INTERNAL"  # Internal listener name
+      KAFKA_LISTENER_INTERNAL: "INTERNAL"  # Internal listener configuration
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: "1"  # Set replication factor to 1 for single-node
+    depends_on: []

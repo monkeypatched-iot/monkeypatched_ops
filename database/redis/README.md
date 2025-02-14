@@ -16,6 +16,6 @@ sudo docker tag  monkeypatched/redis-vss-image:latest monkeypatched.azurecr.io/d
 sudo docker push  monkeypatched.azurecr.io/database/redis-vss-image:latest
 
 
-sudo az login
+az login
 sudo az acr login --name monkeypatched
 
