@@ -12,3 +12,5 @@ sudo docker run -p 7474:7474 -p 7687:7687  --network host --volume=/path/to/your
 sudo docker tag  monkeypatched/neo4j-db:latest monkeypatched.azurecr.io/database/neo4j-db:latest
 sudo docker push monkeypatched.azurecr.io/database/neo4j-db:latest
 
+docker tag monkeypatched/neo4j-db:latest ghcr.io/monkeypatched-iot/neo4j-db:latest
+docker push ghcr.io/monkeypatched-iot/neo4j-db:latest
